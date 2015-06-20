@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/tool_bar"/>
+
+    <android.support.v4.widget.DrawerLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/scanBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/btn_white_large"
+                    android:layout_margin="@dimen/pad_10dp"
+                    android:text="@string/scanIt"/>
+
+                <ListView
+                    android:layout_below="@+id/scanBtn"
+                    android:id="@+id/listview_products"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                </ListView>
+
+        </RelativeLayout>
+
+
+        <fragment android:id="@+id/navigation_drawer_fragment"
+            android:layout_width="@dimen/navDrawer"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:name="com.barcodescanner.gili.scan9.NavigationDrawerFragment"
+            tools:layout="@layout/fragment_nagivation_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

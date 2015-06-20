@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/scanBtn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/btn_white_large"
+                android:layout_margin="@dimen/pad_10dp"
+                android:text="@string/scanIt"/>
+
+        </LinearLayout>
+
+        <ListView
+            android:layout_below="@+id/buttonContainer"
+            android:id="@+id/listview_products1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+        </ListView>
+
+    </RelativeLayout>
+
+
+

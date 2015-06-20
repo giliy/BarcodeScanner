@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Scan9</string>
+    <string name="action_settings">Settings</string>
+    <string name="orderhistory">Order History</string>
+    <string name="login">Login</string>
+    <string name="selectcity">Select City</string>
+    <string name="city_screen">City Screen</string>
+    <string name="home_screen">Home Screen</string>
+
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="or">or</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="log_in">Log in</string>
+    <string name="forgot_my_pwd">I’ve forgotten my password?</string>
+    <string name="my_chats">My Chats</string>
+    <string name="all_chats">All Chats</string>
+    <string name="search">Search</string>
+    <string name="to">To:</string>
+    <string name="edit">Edit</string>
+    <string name="new_chat">New Chat</string>
+    <string name="alert_wait">Please wait...</string>
+    <string name="err_fields_empty">Please fill all the fields.</string>
+    <string name="err_singup">Error occurred while signup:</string>
+    <string name="err_login">Error occurred while login:</string>
+    <string name="err_users">Error occurred while finding users:</string>
+    <string name="alert_loading">Loading...</string>
+    <string name="msg_no_user_found">No users found for chat!</string>
+    <string name="title_activity_register_screen">RegisterScreen</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="back">Back</string>
+    <string name="scanIt">Scan It</string>
+    <string name="title_activity_search_product">searchProduct</string>
+    <string name="title_activity_search_products">searchProducts</string>
+    <string name="title_activity_blah">blah</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawer</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_navigation_drawer_fragment">NavigationDrawerFragment</string>
+    <string name="title_activity_nagivation_drawer_fragment">NagivationDrawerFragment</string>
+</resources>
