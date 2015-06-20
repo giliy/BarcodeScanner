@@ -135,44 +135,8 @@ public class MainActivity extends Activity implements LoaderCallbacks<Cursor> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            usernameTextView.setVisibility(View.GONE);
-            usernameTextView.animate().setDuration(BIND_ADJUST_WITH_ACTIVITY).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    usernameTextView.setVisibility(View.VISIBLE);
-                }
-            });
-
-            passwordTextView.setVisibility(View.GONE);
-            passwordTextView.animate().setDuration(BIND_ADJUST_WITH_ACTIVITY).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                   passwordTextView.setVisibility(View.VISIBLE);
-                }
-            });
-
-            signUpButton.setVisibility(View.GONE);
-            signUpButton.animate().setDuration(BIND_ADJUST_WITH_ACTIVITY).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    signUpButton.setVisibility(View.VISIBLE);
-                }
-            });
-
-            loginButton.setVisibility(View.GONE);
-            loginButton.animate().setDuration(BIND_ADJUST_WITH_ACTIVITY).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    loginButton.setVisibility(View.VISIBLE);
-                }
-            });
-
             progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(BIND_ADJUST_WITH_ACTIVITY).alpha(
+            progressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -231,7 +195,7 @@ public class MainActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        List<String> emails = new ArrayList<String>();
+        List<String> emails = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
@@ -249,7 +213,7 @@ public class MainActivity extends Activity implements LoaderCallbacks<Cursor> {
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(MainActivity.this,
+                new ArrayAdapter<>(MainActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         usernameTextView.setAdapter(adapter);
