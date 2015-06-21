@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:fitsSystemWindows="true"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,32 +15,24 @@
             android:id="@+id/app_bar"
             layout="@layout/tool_bar" />
 
-        <LinearLayout
-            android:id="@+id/btnContainer"
+        <it.neokree.materialtabs.MaterialTabHost
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_below="@+id/app_bar"
-            android:orientation="horizontal">
+            android:id="@+id/materialTabHost"
+            app:primaryColor="@color/primary"
+            app:accentColor="@color/accent"
+            app:iconColor="@android:color/white"
+            app:hasIcons="true"/>
 
-            <Button
-                android:id="@+id/scanBtn"
-                style="@style/btn_white_large"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/pad_10dp"
-                android:text="@string/scanIt" />
 
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/listview_products"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vwPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnContainer">
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        </ListView>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <fragment

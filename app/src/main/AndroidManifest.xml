@@ -48,20 +48,8 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".searchProducts"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_search_products" >
-        </activity>
-        <activity
-            android:name=".NavigationDrawer"
-            android:label="@string/title_activity_navigation_drawer" >
-        </activity>
-        <activity
-            android:name=".NavigationDrawerFragment"
-            android:label="@string/title_activity_navigation_drawer_fragment" >
-        </activity>
-        <activity
-            android:name=".NagivationDrawerFrag"
-            android:label="@string/title_activity_nagivation_drawer_fragment" >
         </activity>
     </application>
 

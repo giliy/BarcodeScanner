@@ -38,7 +38,7 @@ public class Barcode extends Activity{
 
         autoFocusHandler = new Handler();
         mCamera = getCameraInstance();
-        // Instance barcode scanner
+        // Instance _barcode scanner
         scanner = new ImageScanner();
         scanner.setConfig(0, Config.X_DENSITY, 3);
         scanner.setConfig(0, Config.Y_DENSITY, 3);

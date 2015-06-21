@@ -261,7 +261,7 @@ public class MainActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                Intent intent=new Intent(MainActivity.this,searchProducts.class);
+                Intent intent=new Intent(MainActivity.this,HomeActivity.class);
                 startActivity(intent);
             } else {
                 //// login failure

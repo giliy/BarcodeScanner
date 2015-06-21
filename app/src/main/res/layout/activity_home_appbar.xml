@@ -20,20 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/scanBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/btn_white_large"
-                    android:layout_margin="@dimen/pad_10dp"
-                    android:text="@string/scanIt"/>
+            <Button
+                android:id="@+id/scanBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/btn_white_large"
+                android:layout_margin="@dimen/pad_10dp"
+                android:text="@string/scanIt"/>
 
-                <ListView
-                    android:layout_below="@+id/scanBtn"
-                    android:id="@+id/listview_products"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
-                </ListView>
+            <ListView
+                android:layout_below="@+id/scanBtn"
+                android:id="@+id/listview_products"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+            </ListView>
 
         </RelativeLayout>
 

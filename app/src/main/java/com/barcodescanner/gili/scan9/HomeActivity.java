@@ -2,11 +2,15 @@ package com.barcodescanner.gili.scan9;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
@@ -21,21 +25,26 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import Tabs.SlidingTabLayout;
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
 import utils.Product;
 
 
-public class searchProducts extends ActionBarActivity {
-
-    private RecyclerAdapter adapter;
-    private RecyclerView recyclerview;
+public class HomeActivity extends ActionBarActivity implements MaterialTabListener{
 
     private static final String ARG_PAGE = "ARG_PAGE";
     private View myFragmentView;
     private ListView searchResults;
     private Button scanBtn;
+    private ViewPager mPager;
+    private SlidingTabLayout mTabs;
+
+    private MaterialTabHost tabHost;
 
     private String found = "N";
-    final int REQUEST_CODE = 1;
+    public final int REQUEST_CODE = 1;
 
     //This arraylist will have data as pulled from server. This will keep cumulating.
     ArrayList<Product> productResults = new ArrayList<>();
@@ -45,34 +54,94 @@ public class searchProducts extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_products_appbar);
+        setContentView(R.layout.activity_home);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //getSupportActionBar().setHomeButtonEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         drawerFragment.setUp(R.id.navigation_drawer_fragment,(DrawerLayout)findViewById(R.id.drawer_layout), toolbar);
 
-        searchResults = (ListView) findViewById(R.id.listview_products);
-        scanBtn = (Button) findViewById(R.id.scanBtn);
+        mPager = (ViewPager) findViewById(R.id.vwPager);
+        tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
+        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(adapter);
 
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 
-        scanBtn.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                startActivityForResult(new Intent(searchProducts.this, Barcode.class),REQUEST_CODE);
+            @Override
+            public void onPageSelected(int position) {
+                tabHost.setSelectedNavigationItem(position);
             }
         });
-//        recyclerview = (RecyclerView) findViewById(R.id.drawerList);
-//        adapter = new RecyclerAdapter(searchProducts.this,getData());
-//        recyclerview.setAdapter(adapter);
-//        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+        for(int i=0; i< adapter.getCount(); i++){
+            tabHost.addTab(tabHost.newTab().setIcon(adapter.getIcons(i)).setTabListener(this));
+        }
+//        mTabs = (SlidingTabLayout) findViewById(R.id.slideTabs);
+//        mTabs.setViewPager(mPager);
+    }
+
+    @Override
+    public void onTabSelected(MaterialTab materialTab) {
+        mPager.setCurrentItem(materialTab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(MaterialTab materialTab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(MaterialTab materialTab) {
+
+    }
+
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        String[] tabs;
+        int icons[] = {R.drawable.ic_barcode, R.drawable.ic_cart2, R.drawable.ic_cart2};
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+            tabs = getResources().getStringArray(R.array.tabs);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return getResources().getStringArray(R.array.tabs)[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                   return  SearchProduct.getInstance(position);
+                case 1:
+                   return SearchProduct.getInstance(position);
+                case 2:
+                    return SearchProduct.getInstance(position);
+                default:
+                    break;
+            }
+            return  null;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        private Drawable getIcons(int position){
+            return getResources().getDrawable(icons[position]);
+        }
+
     }
 
 
@@ -119,7 +188,7 @@ public class searchProducts extends ActionBarActivity {
             String barcode=data.getStringExtra("BARCODE");
             if (barcode.equals("NULL"))
             {
-                //that means barcode could not be identified or user pressed the back button
+                //that means _barcode could not be identified or user pressed the back button
                 //do nothing
             }
             else
@@ -146,7 +215,7 @@ public class searchProducts extends ActionBarActivity {
             super.onPreExecute();
             productList=new JSONArray();
             jParser = new JSONParser();
-            pd= new ProgressDialog(searchProducts.this);
+            pd= new ProgressDialog(HomeActivity.this);
             pd.setCancelable(false);
             pd.setMessage("Searching...");
             pd.getWindow().setGravity(Gravity.CENTER);
@@ -229,7 +298,7 @@ public class searchProducts extends ActionBarActivity {
 
             if(result.equalsIgnoreCase("Exception Caught"))
             {
-                Toast.makeText(searchProducts.this, "Unable to connect to server,please try later", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, "Unable to connect to server,please try later", Toast.LENGTH_LONG).show();
 
                 pd.dismiss();
             }
@@ -238,7 +307,7 @@ public class searchProducts extends ActionBarActivity {
                 //calling this method to filter the search results from productResults and move them to
                 //filteredProductResults
                 filterProductArray(textSearch);
-                searchResults.setAdapter(new SearchResultsAdapter(searchProducts.this, filteredProductResults));
+                searchResults.setAdapter(new SearchResultsAdapter(HomeActivity.this, filteredProductResults));
                 pd.dismiss();
             }
         }
