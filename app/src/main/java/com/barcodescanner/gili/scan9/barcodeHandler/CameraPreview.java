@@ -1,4 +1,4 @@
-package com.barcodescanner.gili.scan9;
+package com.barcodescanner.gili.scan9.barcodeHandler;
 
 import java.io.IOException;
 

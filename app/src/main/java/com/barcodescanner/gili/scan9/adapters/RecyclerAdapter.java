@@ -1,4 +1,4 @@
-package com.barcodescanner.gili.scan9;
+package com.barcodescanner.gili.scan9.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barcodescanner.gili.scan9.ProductInformation;
+import com.barcodescanner.gili.scan9.R;
+
 import java.util.Collections;
 import java.util.List;
-
-import utils.Product;
 
 /**
  * Created by gili on 6/16/2015.
@@ -67,8 +68,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.myView
         public myViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            prodName = (TextView) itemView.findViewById(R.id.prodname);
-            prodIcon = (ImageView) itemView.findViewById(R.id.prodicon);
+            prodName = (TextView) itemView.findViewById(R.id.prodName);
+            prodIcon = (ImageView) itemView.findViewById(R.id.prodPic);
 
             //prodIcon.setOnClickListener(this);
         }

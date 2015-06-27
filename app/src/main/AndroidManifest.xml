@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".myApp.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -36,7 +37,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".Barcode"
+            android:name=".barcodeHandler.Barcode"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >
         </activity>

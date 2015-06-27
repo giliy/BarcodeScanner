@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/size_byte"
+    android:paddingLeft="@dimen/size_word"
+    android:paddingRight="@dimen/size_word"
+    android:paddingTop="@dimen/size_byte">
 
     <ImageView
-        android:id="@+id/prodicon"
-        android:padding="8dp"
-        android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/prodPic"
+        android:layout_width="54dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_launcher"
     />
 
     <TextView
-        android:id="@+id/prodname"
-        android:gravity="center_vertical"
-        android:padding="8dp"
-        android:layout_gravity="center_vertical"
+        android:id="@+id/prodName"
+        style="@style/Base.TextAppearance.AppCompat.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/prodPic"
+        android:layout_marginLeft="56dp"
+        android:gravity="right"
+        android:alpha="0.87"
+        android:padding="@dimen/size_half_byte"
+        android:textSize="@dimen/size_text_primary"
         android:text="Dummy Text"
     />
 
+    <RatingBar
+        android:id="@+id/product_rate"
+        style="@android:style/Widget.Holo.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prodName"
+        android:layout_alignParentRight="true"
+        android:isIndicator="false"
+        android:max="5"
+        android:numStars="0"/>
 
-</LinearLayout>
+
+</RelativeLayout>

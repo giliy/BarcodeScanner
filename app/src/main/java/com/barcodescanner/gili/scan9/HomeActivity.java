@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.barcodescanner.gili.scan9.homeFragment.SearchProduct;
+import com.barcodescanner.gili.scan9.homeFragment.SearchCart;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -124,7 +127,7 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
                 case 0:
                    return  SearchProduct.getInstance(position);
                 case 1:
-                   return SearchProduct.getInstance(position);
+                   return SearchCart.getInstance(position);
                 case 2:
                     return SearchProduct.getInstance(position);
                 default:

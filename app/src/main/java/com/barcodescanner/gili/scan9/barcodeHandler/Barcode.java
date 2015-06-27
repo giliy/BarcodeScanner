@@ -1,4 +1,4 @@
-package com.barcodescanner.gili.scan9;
+package com.barcodescanner.gili.scan9.barcodeHandler;
 
 import net.sourceforge.zbar.Config;
 import net.sourceforge.zbar.Image;
@@ -15,6 +15,8 @@ import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.FrameLayout;
+
+import com.barcodescanner.gili.scan9.R;
 
 public class Barcode extends Activity{
 

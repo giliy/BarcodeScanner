@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.+'
     compile files('libs/zbar.jar')
     compile 'it.neokree:MaterialTabs:0.11'
+    compile 'com.mcxiaoke.volley:library:1.0.+'
 }

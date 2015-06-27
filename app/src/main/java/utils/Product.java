@@ -16,6 +16,7 @@ public class Product{
     private String product_bbprice;
     private String product_qty;
     private String product_value;
+    private double product_rate;
 
     public void setProductName (String product_name)
     {
@@ -38,6 +39,13 @@ public class Product{
     public String getProductGrammage()
     {
         return product_grammage;
+    }
+
+    public void setProductRate(double product_rate){
+        this.product_rate = product_rate;
+    }
+    public double getProductRate(){
+        return this.product_rate;
     }
 
     public void setProductBarcode (String product_barcode)
