@@ -1,6 +1,10 @@
 package utils;
 
-public class Product{
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.widget.Toast;
+
+public class Product implements Parcelable{
 
     private String product_name;
     private int product_icon;
@@ -17,6 +21,21 @@ public class Product{
     private String product_qty;
     private String product_value;
     private double product_rate;
+
+    public Product() {
+
+    }
+
+    public Product(Parcel parcel){
+        this.product_name = parcel.readString();
+        this.product_code = parcel.readString();
+        this.product_barcode = parcel.readString();
+        this.product_department = parcel.readString();
+        this.product_division = parcel.readString();
+        this.product_family = parcel.readString();
+        this.product_groupfamily = parcel.readString();
+        this.product_subfamily = parcel.readString();
+    }
 
     public void setProductName (String product_name)
     {
@@ -157,4 +176,36 @@ public class Product{
     {
         return product_code;
     }
+
+    @Override
+    public int describeContents() {
+
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(product_name);
+        dest.writeString(product_code);
+        dest.writeString(product_barcode);
+        dest.writeString(product_department);
+        dest.writeString(product_division);
+        dest.writeString(product_family);
+        dest.writeString(product_groupfamily);
+        dest.writeString(product_subfamily);
+
+    }
+
+    public static final Creator<Product> CREATOR
+            = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 }

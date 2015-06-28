@@ -17,11 +17,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.barcodescanner.gili.scan9.homeFragment.SearchProduct;
 import com.barcodescanner.gili.scan9.homeFragment.SearchCart;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,21 +37,27 @@ import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 import utils.Product;
+import utils.SortListener;
 
 
-public class HomeActivity extends ActionBarActivity implements MaterialTabListener{
+public class HomeActivity extends ActionBarActivity implements MaterialTabListener, View.OnClickListener{
 
     private static final String ARG_PAGE = "ARG_PAGE";
-    private View myFragmentView;
-    private ListView searchResults;
+    public View myFragmentView;
+    public ListView searchResults;
     private Button scanBtn;
-    private ViewPager mPager;
+    public ViewPager mPager;
     private SlidingTabLayout mTabs;
+    public MyPagerAdapter mAdapter;
 
-    private MaterialTabHost tabHost;
+    public MaterialTabHost tabHost;
 
     private String found = "N";
     public final int REQUEST_CODE = 1;
+
+    public static final String TAG_SORT_NAME = "sortName";
+    public static final String TAG_SORT_DATE = "sortDate";
+    public static final String TAG_SORT_RATE = "sortRate";
 
     //This arraylist will have data as pulled from server. This will keep cumulating.
     ArrayList<Product> productResults = new ArrayList<>();
@@ -73,8 +83,8 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
 
         mPager = (ViewPager) findViewById(R.id.vwPager);
         tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
-        MyPagerAdapter adapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(adapter);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
 
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
 
@@ -84,11 +94,48 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
             }
         });
 
-        for(int i=0; i< adapter.getCount(); i++){
-            tabHost.addTab(tabHost.newTab().setIcon(adapter.getIcons(i)).setTabListener(this));
+        for(int i=0; i< mAdapter.getCount(); i++){
+            tabHost.addTab(tabHost.newTab().setIcon(mAdapter.getIcons(i)).setTabListener(this));
         }
 //        mTabs = (SlidingTabLayout) findViewById(R.id.slideTabs);
 //        mTabs.setViewPager(mPager);
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(R.drawable.ic_action_new);
+
+        FloatingActionButton actionButton  = new FloatingActionButton.Builder(this)
+                .setContentView(imageView)
+                .setBackgroundDrawable(R.drawable.selector_navigation_button_red)
+                .build();
+
+        ImageView iconSortName = new ImageView(this);
+        iconSortName.setImageResource(R.drawable.ic_action_alphabets);
+        ImageView iconSortDate = new ImageView(this);
+        iconSortDate.setImageResource(R.drawable.ic_barcode);
+        ImageView iconSortRate = new ImageView(this);
+        iconSortRate.setImageResource(R.drawable.ic_launcher);
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+        itemBuilder.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_sub_navigation_button_gray));
+
+        SubActionButton buttonSortName = itemBuilder.setContentView(iconSortName).build();
+        SubActionButton buttonSortDate = itemBuilder.setContentView(iconSortDate).build();
+        SubActionButton buttonSortRate = itemBuilder.setContentView(iconSortRate).build();
+
+        buttonSortName.setTag(TAG_SORT_NAME);
+        buttonSortDate.setTag(TAG_SORT_DATE);
+        buttonSortRate.setTag(TAG_SORT_RATE);
+
+        buttonSortName.setOnClickListener(this);
+        buttonSortDate.setOnClickListener(this);
+        buttonSortRate.setOnClickListener(this);
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(buttonSortName)
+                .addSubActionView(buttonSortDate)
+                .addSubActionView(buttonSortRate)
+                .attachTo(actionButton)
+                .build();
     }
 
     @Override
@@ -103,6 +150,28 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
 
     @Override
     public void onTabUnselected(MaterialTab materialTab) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = (Fragment) mAdapter.instantiateItem(mPager, mPager.getCurrentItem());
+        if(fragment instanceof SortListener){
+
+            if(v.getTag().equals(TAG_SORT_NAME)){
+                ((SortListener)fragment).onSortBuyName();
+            }
+            if(v.getTag().equals(TAG_SORT_DATE)){
+                Toast.makeText(HomeActivity.this, "let me think", Toast.LENGTH_LONG).show();
+
+            }
+            if(v.getTag().equals(TAG_SORT_RATE)){
+                Toast.makeText(HomeActivity.this, "good question", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+
 
     }
 
