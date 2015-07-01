@@ -52,6 +52,10 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_search_products" >
         </activity>
+        <activity
+            android:name=".homeFragment.ShoppingList"
+            android:label="@string/title_activity_list_of_products" >
+        </activity>
     </application>
 
 </manifest>

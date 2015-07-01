@@ -60,4 +60,6 @@
     <string name="title_activity_navigation_drawer_fragment">NavigationDrawerFragment</string>
     <string name="title_activity_nagivation_drawer_fragment">NagivationDrawerFragment</string>
     <string name="title_activity_fragment_seach">FragmentSeach</string>
+    <string name="title_activity_list_of_products">ListOfProducts</string>
+    <string name="add_item">Add item</string>
 </resources>

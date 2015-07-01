@@ -16,11 +16,13 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.barcodescanner.gili.scan9.homeFragment.ShoppingList;
 import com.barcodescanner.gili.scan9.homeFragment.SearchProduct;
 import com.barcodescanner.gili.scan9.homeFragment.SearchCart;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
@@ -36,6 +38,7 @@ import Tabs.SlidingTabLayout;
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
+import utils.AnimationUtils;
 import utils.Product;
 import utils.SortListener;
 
@@ -50,6 +53,9 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
     private SlidingTabLayout mTabs;
     public MyPagerAdapter mAdapter;
 
+    private NavigationDrawerFragment drawerFragment;
+    private Toolbar toolbar;
+    private ViewGroup mContainerToolbar;
     public MaterialTabHost tabHost;
 
     private String found = "N";
@@ -69,17 +75,19 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.app_bar);
+        toolbar = (Toolbar)findViewById(R.id.app_bar);
+        mContainerToolbar = (ViewGroup) findViewById(R.id.container_app_bar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //getSupportActionBar().setHomeButtonEnabled(true);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
+        drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
         drawerFragment.setUp(R.id.navigation_drawer_fragment,(DrawerLayout)findViewById(R.id.drawer_layout), toolbar);
+
+
 
         mPager = (ViewPager) findViewById(R.id.vwPager);
         tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
@@ -136,6 +144,12 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
                 .addSubActionView(buttonSortRate)
                 .attachTo(actionButton)
                 .build();
+
+        AnimationUtils.animateToolbar(mContainerToolbar);
+    }
+
+    public View getContainerToolbar() {
+        return mContainerToolbar;
     }
 
     @Override
@@ -198,7 +212,7 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
                 case 1:
                    return SearchCart.getInstance(position);
                 case 2:
-                    return SearchProduct.getInstance(position);
+                    return ShoppingList.getInstance(position);
                 default:
                     break;
             }
@@ -383,6 +397,11 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
                 pd.dismiss();
             }
         }
+
+    }
+
+    public void onDrawerItemClicked(int index){
+        mPager.setCurrentItem(index);
 
     }
 
