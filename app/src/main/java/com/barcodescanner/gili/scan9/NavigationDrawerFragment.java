@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v7.app.ActionBarDrawerToggle;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class NavigationDrawerFragment extends Fragment implements AdapterDrawer.
     private RecyclerView recyclerView;
     private AdapterDrawer adapter;
 
-    private android.support.v7.app.ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
 
     private boolean mUserLearnedDrawer;
@@ -79,7 +80,7 @@ public class NavigationDrawerFragment extends Fragment implements AdapterDrawer.
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
       mDrawerLayout = drawerLayout;
       containerView = getActivity().findViewById(fragmentId);
-      mDrawerToggle = new android.support.v7.app.ActionBarDrawerToggle(getActivity(),drawerLayout,toolbar,R.string.drawer_open, R.string.drawer_close){
+      mDrawerToggle = new ActionBarDrawerToggle(getActivity(),drawerLayout,toolbar,R.string.drawer_open, R.string.drawer_close){
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -100,14 +101,12 @@ public class NavigationDrawerFragment extends Fragment implements AdapterDrawer.
 
           @Override
           public void onDrawerSlide(View drawerView, float slideOffset) {
-              if(slideOffset < 0.6){
-                  toolbar.setAlpha(1-slideOffset);
-              }
+              super.onDrawerSlide(drawerView,slideOffset);
+              ((HomeActivity) getActivity()).onDrawerSlide(slideOffset);
+              toolbar.setAlpha(1- slideOffset / 2);
           }
       };
-        if(!mUserLearnedDrawer && !mFromSavedInstanceState){
-            mDrawerLayout.openDrawer(containerView);
-        }
+
 
       mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -115,6 +114,9 @@ public class NavigationDrawerFragment extends Fragment implements AdapterDrawer.
           @Override
           public void run() {
               mDrawerToggle.syncState();
+              if(!mUserLearnedDrawer && !mFromSavedInstanceState){
+                  mDrawerLayout.openDrawer(containerView);
+              }
           }
       });
     }

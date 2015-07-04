@@ -54,9 +54,9 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
     public MyPagerAdapter mAdapter;
 
     private NavigationDrawerFragment drawerFragment;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private ViewGroup mContainerToolbar;
-    public MaterialTabHost tabHost;
+    public MaterialTabHost mTabHost;
 
     private String found = "N";
     public final int REQUEST_CODE = 1;
@@ -64,6 +64,9 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
     public static final String TAG_SORT_NAME = "sortName";
     public static final String TAG_SORT_DATE = "sortDate";
     public static final String TAG_SORT_RATE = "sortRate";
+
+    private FloatingActionButton mFAB;
+    private FloatingActionMenu mFABMenu;
 
     //This arraylist will have data as pulled from server. This will keep cumulating.
     ArrayList<Product> productResults = new ArrayList<>();
@@ -75,9 +78,15 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar)findViewById(R.id.app_bar);
+        setupDrawer();
+        setupTabs();
+        setupFAB();
+    }
+
+    private void setupDrawer() {
+        mToolbar = (Toolbar)findViewById(R.id.app_bar);
         mContainerToolbar = (ViewGroup) findViewById(R.id.container_app_bar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //getSupportActionBar().setHomeButtonEnabled(true);
@@ -85,12 +94,12 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
 
         drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
-        drawerFragment.setUp(R.id.navigation_drawer_fragment,(DrawerLayout)findViewById(R.id.drawer_layout), toolbar);
+        drawerFragment.setUp(R.id.navigation_drawer_fragment,(DrawerLayout)findViewById(R.id.drawer_layout), mToolbar);
+    }
 
-
-
+    private void setupTabs() {
         mPager = (ViewPager) findViewById(R.id.vwPager);
-        tabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
+        mTabHost = (MaterialTabHost) findViewById(R.id.materialTabHost);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
 
@@ -98,20 +107,20 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
 
             @Override
             public void onPageSelected(int position) {
-                tabHost.setSelectedNavigationItem(position);
+                mTabHost.setSelectedNavigationItem(position);
             }
         });
 
         for(int i=0; i< mAdapter.getCount(); i++){
-            tabHost.addTab(tabHost.newTab().setIcon(mAdapter.getIcons(i)).setTabListener(this));
+            mTabHost.addTab(mTabHost.newTab().setIcon(mAdapter.getIcons(i)).setTabListener(this));
         }
-//        mTabs = (SlidingTabLayout) findViewById(R.id.slideTabs);
-//        mTabs.setViewPager(mPager);
+    }
 
+    private void setupFAB() {
         ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.drawable.ic_action_new);
 
-        FloatingActionButton actionButton  = new FloatingActionButton.Builder(this)
+        mFAB  = new FloatingActionButton.Builder(this)
                 .setContentView(imageView)
                 .setBackgroundDrawable(R.drawable.selector_navigation_button_red)
                 .build();
@@ -138,97 +147,16 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
         buttonSortDate.setOnClickListener(this);
         buttonSortRate.setOnClickListener(this);
 
-        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+        mFABMenu = new FloatingActionMenu.Builder(this)
                 .addSubActionView(buttonSortName)
                 .addSubActionView(buttonSortDate)
                 .addSubActionView(buttonSortRate)
-                .attachTo(actionButton)
+                .attachTo(mFAB)
                 .build();
 
         AnimationUtils.animateToolbar(mContainerToolbar);
     }
 
-    public View getContainerToolbar() {
-        return mContainerToolbar;
-    }
-
-    @Override
-    public void onTabSelected(MaterialTab materialTab) {
-        mPager.setCurrentItem(materialTab.getPosition());
-    }
-
-    @Override
-    public void onTabReselected(MaterialTab materialTab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(MaterialTab materialTab) {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        Fragment fragment = (Fragment) mAdapter.instantiateItem(mPager, mPager.getCurrentItem());
-        if(fragment instanceof SortListener){
-
-            if(v.getTag().equals(TAG_SORT_NAME)){
-                ((SortListener)fragment).onSortBuyName();
-            }
-            if(v.getTag().equals(TAG_SORT_DATE)){
-                Toast.makeText(HomeActivity.this, "let me think", Toast.LENGTH_LONG).show();
-
-            }
-            if(v.getTag().equals(TAG_SORT_RATE)){
-                Toast.makeText(HomeActivity.this, "good question", Toast.LENGTH_LONG).show();
-
-            }
-
-        }
-
-
-    }
-
-    class MyPagerAdapter extends FragmentStatePagerAdapter {
-
-        String[] tabs;
-        int icons[] = {R.drawable.ic_barcode, R.drawable.ic_cart2, R.drawable.ic_cart2};
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-            tabs = getResources().getStringArray(R.array.tabs);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            return getResources().getStringArray(R.array.tabs)[position];
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0:
-                   return  SearchProduct.getInstance(position);
-                case 1:
-                   return SearchCart.getInstance(position);
-                case 2:
-                    return ShoppingList.getInstance(position);
-                default:
-                    break;
-            }
-            return  null;
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        private Drawable getIcons(int position){
-            return getResources().getDrawable(icons[position]);
-        }
-
-    }
 
 
     public static ArrayList<Product> getData() {
@@ -400,12 +328,6 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
 
     }
 
-    public void onDrawerItemClicked(int index){
-        mPager.setCurrentItem(index);
-
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -426,5 +348,102 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onTabSelected(MaterialTab materialTab) {
+        mPager.setCurrentItem(materialTab.getPosition());
+    }
+
+    @Override
+    public void onTabReselected(MaterialTab materialTab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(MaterialTab materialTab) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = (Fragment) mAdapter.instantiateItem(mPager, mPager.getCurrentItem());
+        if(fragment instanceof SortListener){
+
+            if(v.getTag().equals(TAG_SORT_NAME)){
+                ((SortListener)fragment).onSortBuyName();
+            }
+            if(v.getTag().equals(TAG_SORT_DATE)){
+                Toast.makeText(HomeActivity.this, "let me think", Toast.LENGTH_LONG).show();
+
+            }
+            if(v.getTag().equals(TAG_SORT_RATE)){
+                Toast.makeText(HomeActivity.this, "good question", Toast.LENGTH_LONG).show();
+
+            }
+
+        }
+
+
+    }
+
+    public void onDrawerItemClicked(int index){
+        mPager.setCurrentItem(index);
+
+    }
+
+    public void onDrawerSlide(float slideOffset){
+        toggleTranslateFAB(slideOffset);
+    }
+
+    private void toggleTranslateFAB(float slideOffset) {
+        if(mFABMenu != null){
+            if(mFABMenu.isOpen()){
+                mFABMenu.close(true);
+            }
+            mFAB.setTranslationX(slideOffset * 200);
+        }
+    }
+
+    class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        String[] tabs;
+        int icons[] = {R.drawable.ic_barcode, R.drawable.ic_cart2, R.drawable.ic_cart2};
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+            tabs = getResources().getStringArray(R.array.tabs);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return getResources().getStringArray(R.array.tabs)[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                    return  SearchProduct.getInstance(position);
+                case 1:
+                    return SearchCart.getInstance(position);
+                case 2:
+                    return ShoppingList.getInstance(position);
+                default:
+                    break;
+            }
+            return  null;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        private Drawable getIcons(int position){
+            return getResources().getDrawable(icons[position]);
+        }
+
     }
 }
