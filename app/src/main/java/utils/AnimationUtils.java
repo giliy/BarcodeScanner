@@ -20,8 +20,12 @@ import com.daimajia.androidanimations.library.YoYo;
  */
 public class AnimationUtils {
 
-    public static void animate(RecyclerView.ViewHolder holder){
+    private static int counter = 0;
 
+    public static void animate(RecyclerView.ViewHolder holder){
+        YoYo.with(Techniques.RubberBand)
+                .duration(1000)
+                .playOn(holder.itemView);
     }
     public static void animateToolbar(View containerToolbar){
 
@@ -36,5 +40,38 @@ public class AnimationUtils {
         animatorSet.playTogether(alpha, rotationX);
         animatorSet.start();
 
+    }
+
+    public static void animateScatter(RecyclerView.ViewHolder holder, boolean goesDown) {
+        counter = ++counter % 4;
+        int holderHeight = holder.itemView.getHeight();
+        int holderWidth = holder.itemView.getWidth();
+        View holderItemView = holder.itemView;
+        holderItemView.setPivotY(goesDown == true ? 0 : holderHeight);
+        holderItemView.setPivotX(holderWidth / 2);
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(holderItemView, "translationY", goesDown == true ? 300 : -300, 0);
+        ObjectAnimator animatorTranslateX = ObjectAnimator.ofFloat(holderItemView, "translationX", counter == 1 || counter == 3 ? holderWidth : -holderWidth, 0);
+        ObjectAnimator animatorScaleX = ObjectAnimator.ofFloat(holderItemView, "scaleX", counter == 1 || counter == 2 ? 0 : 2, 1f);
+        ObjectAnimator animatorScaleY = ObjectAnimator.ofFloat(holderItemView, "scaleY", counter == 1 || counter == 2 ? 0 : 2, 1f);
+        ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(holderItemView, "alpha", 0f, 1f);
+        animatorAlpha.setInterpolator(new AccelerateInterpolator(1.5f));
+        animatorSet.playTogether(animatorAlpha, animatorScaleX, animatorScaleY, animatorTranslateX, animatorTranslateY);
+        animatorSet.setDuration(2000).setInterpolator(new DecelerateInterpolator(1.1f));
+        animatorSet.start();
+    }
+
+    public static void animateSunblind(RecyclerView.ViewHolder holder, boolean goesDown) {
+        int holderHeight = holder.itemView.getHeight();
+        holder.itemView.setPivotY(goesDown == true ? 0 : holderHeight);
+        holder.itemView.setPivotX(holder.itemView.getHeight());
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(holder.itemView, "translationY", goesDown == true ? 300 : -300, 0);
+        ObjectAnimator animatorRotation = ObjectAnimator.ofFloat(holder.itemView, "rotationX", goesDown == true ? -90f : 90, 0f);
+        ObjectAnimator animatorScaleX = ObjectAnimator.ofFloat(holder.itemView, "scaleX", 0.5f, 1f);
+        animatorSet.playTogether(animatorTranslateY, animatorRotation, animatorScaleX);
+        animatorSet.setInterpolator(new DecelerateInterpolator(1.1f));
+        animatorSet.setDuration(1000);
+        animatorSet.start();
     }
 }
