@@ -20,4 +20,9 @@
     <color name="main_color_gray_lt">#acacac</color>
     <color name="main_color_gray">#7d7d7d</color>
     <color name="gray_light">#e8e8e8</color>
+
+    <color name="edit_t_l_r">#2299de</color>
+    <color name="light_grey">#ababab</color>
+    <color name="dark_grey">#4a4a4a</color>
+    <color name="blue">#3194a9</color>
 </resources>
