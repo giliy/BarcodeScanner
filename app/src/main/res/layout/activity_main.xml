@@ -1,171 +1,25 @@
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#eee"
-    android:id="@+id/loginView"
-    >
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        >
-       <ImageView
+    <ImageView
              android:id="@+id/backgroundImage"
              android:layout_width="fill_parent"
              android:layout_height="fill_parent"
              android:src="@drawable/supermarket"
              android:scaleType="center" />
 
-        <LinearLayout
-            android:id="@+id/loginLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="center"
+            android:background="@drawable/barcode_logo"
+            android:layout_marginTop="77dp"
             android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:padding="10dp"
-            android:orientation="vertical"
-
-            >
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:background="@drawable/barcode_logo"
-                android:layout_marginTop="40dp" />
-
-            <LinearLayout
-                android:id="@+id/layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/logo"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
-                android:orientation="vertical"
-                android:focusableInTouchMode="true"
-                >
+            android:layout_centerHorizontal="true" />
 
 
-                <AutoCompleteTextView
-                    android:id="@+id/user"
-                    style="@style/EditT_log_reg"
-                    android:hint="Username"
-                    android:drawableLeft="@drawable/ic_username1"
-                    android:layout_marginTop="20dp">
-
-                <requestFocus />
-                </AutoCompleteTextView>
-
-                <EditText
-                    android:id="@+id/pwd"
-                    style="@style/EditT_log_reg"
-                    android:hint="Password"
-                    android:singleLine="true"
-                    android:layout_marginTop="10dp"
-                    android:inputType="textPassword"
-                    android:drawableLeft="@drawable/ic_pwd1"
-                    />
-
-                <Button
-                    android:id="@+id/Login"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@color/light_grey"
-                    android:text="Login"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/fb"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#3B5998"
-                    android:text="Login with facebook"
-                    android:textColor="#fff"
-                    android:textStyle="bold" />
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="30dp"
-                    android:background="#000" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".49"
-                            android:gravity="center"
-                            android:text="Not a member?"
-                            android:textColor="@color/light_grey"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/createAcountText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".49"
-                            android:gravity="center"
-                            android:text="Create an Account"
-                            android:textColor="#fff"
-                            />
-                    </LinearLayout>
-
-
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:layout_margin="10dp"
-                        android:background="#000" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:layout_weight=".49"
-                            android:gravity="center"
-                            android:text="Lost Password?"
-                            android:textColor="@color/light_grey"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".49"
-                            android:gravity="center"
-                            android:text="No problem"
-                            android:textColor="#fff"/>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
 
     </RelativeLayout>
 
-</ScrollView >

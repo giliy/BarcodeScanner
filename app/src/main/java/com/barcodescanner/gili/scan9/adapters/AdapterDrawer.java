@@ -1,6 +1,7 @@
 package com.barcodescanner.gili.scan9.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barcodescanner.gili.scan9.HomeActivity;
+import com.barcodescanner.gili.scan9.MainActivity;
 import com.barcodescanner.gili.scan9.TitleInformation;
 import com.barcodescanner.gili.scan9.R;
 
@@ -52,8 +55,12 @@ public class AdapterDrawer extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if(holder instanceof HeaderHolder){
 
+        if(holder instanceof HeaderHolder){
+            HeaderHolder headerHolder = (HeaderHolder)holder;
+
+
+            //headerHolder.profilePic.setImageResource();
         }
         else
         {
@@ -116,8 +123,11 @@ public class AdapterDrawer extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     class HeaderHolder extends RecyclerView.ViewHolder {
 
+        ImageView profilePic;
         public HeaderHolder(View itemView) {
             super(itemView);
+            profilePic = (ImageView) itemView.findViewById(R.id.image_profile);
+
         }
 
     }

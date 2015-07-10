@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.barcodescanner.gili.scan9.homeFragment.ShoppingList;
 import com.barcodescanner.gili.scan9.homeFragment.SearchProduct;
 import com.barcodescanner.gili.scan9.homeFragment.SearchCart;
+import com.facebook.Profile;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
@@ -39,8 +40,10 @@ import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 import utils.AnimationUtils;
+import utils.L;
 import utils.Product;
 import utils.SortListener;
+import utils.User;
 
 
 public class HomeActivity extends ActionBarActivity implements MaterialTabListener, View.OnClickListener{
@@ -68,6 +71,9 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
     private FloatingActionButton mFAB;
     private FloatingActionMenu mFABMenu;
 
+    private User mUser;
+
+
     //This arraylist will have data as pulled from server. This will keep cumulating.
     ArrayList<Product> productResults = new ArrayList<>();
     //Based on the search string, only filtered products will be moved here from productResults
@@ -77,7 +83,7 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        UserInit();
         setupDrawer();
         setupTabs();
         setupFAB();
@@ -88,9 +94,6 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
         mContainerToolbar = (ViewGroup) findViewById(R.id.container_app_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        //getSupportActionBar().setHomeButtonEnabled(true);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         drawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer_fragment);
@@ -157,6 +160,15 @@ public class HomeActivity extends ActionBarActivity implements MaterialTabListen
         AnimationUtils.animateToolbar(mContainerToolbar);
     }
 
+
+    private void UserInit() {
+        Profile mProfile = Profile.getCurrentProfile();
+        mUser = User.getUserInstance();
+        mUser.setFirstName(mProfile.getFirstName());
+        mUser.setLastName(mProfile.getLastName());
+        mUser.setName(mProfile.getName());
+        mUser.setProfileImage(mProfile.getProfilePictureUri(72,72));
+    }
 
 
     public static ArrayList<Product> getData() {

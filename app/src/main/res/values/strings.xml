@@ -6,7 +6,7 @@
     <string name="selectcity">Select City</string>
     <string name="city_screen">City Screen</string>
     <string name="home_screen">Home Screen</string>
-
+    <string name="facebook_id">390798641117587</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -62,4 +62,7 @@
     <string name="title_activity_fragment_seach">FragmentSeach</string>
     <string name="title_activity_list_of_products">ListOfProducts</string>
     <string name="add_item">Add item</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+
 </resources>
